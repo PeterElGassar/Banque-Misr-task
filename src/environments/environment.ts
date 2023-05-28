@@ -3,9 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  baseUrl: 'http://data.fixer.io/api/',
+  fixer_key: 'ef0225e484b5db5ad548431680772b6c',
+  fastforex_key: '22b397f15a-87d05ba5ac-rve66o'
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
