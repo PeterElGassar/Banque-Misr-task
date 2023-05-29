@@ -1,4 +1,60 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  /* Color shades */
+  --s-0: 0%;
+  --s-10: 10%;
+  --s-20: 20%;
+  --s-30: 30%;
+  --s-40: 40%;
+  --s-50: 50%;
+  --s-60: 60%;
+  --s-70: 70%;
+  --s-80: 80%;
+  --s-90: 90%;
+  --s-100: 100%;
+
+  /* White */
+  --white: var(--white-100);
+  --white-0: hsl(0, 0%, var(--s-0));
+  --white-10: hsl(0, 0%, var(--s-10));
+  --white-20: hsl(0, 0%, var(--s-20));
+  --white-30: hsl(0, 0%, var(--s-30));
+  --white-40: hsl(0, 0%, var(--s-40));
+  --white-50: hsl(0, 0%, var(--s-50));
+  --white-60: hsl(0, 0%, var(--s-60));
+  --white-70: hsl(0, 0%, var(--s-70));
+  --white-80: hsl(0, 0%, var(--s-80));
+  --white-90: hsl(0, 0%, var(--s-90));
+  --white-100: hsl(0, 0%, var(--s-100));
+
+  /* Background color */
+  --background-light: var(--white);
+  --background: var(--white-90);
+  --background-dark: var(--white-80);
+
+  /* Text colors */
+  --text: var(--white-20);
+  --text-secondary: var(--white-60);
+  --text-button: var(--white-100);
+
+  /* Primary color */
+  --primary-hue: 190;
+  --primary: var(--primary-50);
+  --primary-10: hsl(var(--primary-hue), 100%, var(--s-10));
+  --primary-20: hsl(var(--primary-hue), 100%, var(--s-20));
+  --primary-30: hsl(var(--primary-hue), 100%, var(--s-30));
+  --primary-40: hsl(var(--primary-hue), 100%, var(--s-40));
+  --primary-50: hsl(var(--primary-hue), 100%, var(--s-50));
+  --primary-60: hsl(var(--primary-hue), 100%, var(--s-60));
+  --primary-70: hsl(var(--primary-hue), 100%, var(--s-70));
+  --primary-80: hsl(var(--primary-hue), 100%, var(--s-80));
+  --primary-90: hsl(var(--primary-hue), 100%, var(--s-90));
+  --primary-100: hsl(var(--primary-hue), 100%, var(--s-100));
+}
+
+*{
+  box-sizing: border-box;
+}
 body{
     margin: 0;
     padding: 0;
@@ -14,11 +70,73 @@ body{
   label,
   button,
   a {
-    font-family: "Open Sans" !important;
+    // font-family: "Open Sans" !important;
     font-style: normal !important;
+    text-decoration: none;
   }
   
   body {
     margin: 0;
     padding: 0;
   }
+.row{
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.w-50{
+  width: 50%;
+}
+
+.btn-primary{
+  padding: 15px 50px;
+  width: 100%;
+  border-radius: 12px;
+  background: #1abc9c;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  float: right;
+  clear: right;
+  transition: 0.2s ease all;
+}
+  @media screen and (max-width: 1200px) {}
+  @media screen and (max-width: 1024px) {}
+  @media screen and (max-width: 992px) {
+    .wrapper-amount,.calc-form{
+      flex: none !important;
+      width: 100%;
+    }
+
+
+    
+    .row{
+      flex-direction: column;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    #exchange-form{
+      padding: 15px;
+    }
+    .calc-form{
+    flex-direction: column;
+    .form-control{
+      flex: none;
+      width: 100%;
+
+    }
+
+    .btn-revers{
+      width: 50%;
+    }
+  }
+  }
+  @media screen and (max-width:  576px) {}
+  @media screen and (max-width:  480px) {}
+
+
+
+
+
+  
