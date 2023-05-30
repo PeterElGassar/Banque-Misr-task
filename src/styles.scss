@@ -130,10 +130,33 @@ body{
     .btn-revers{
       width: 50%;
     }
+
+
+
+        .parent {
+    
+          .row {}
+    
+          div.col {
+            width: 50% !important;
+           
+          }
+        }
   }
   }
   @media screen and (max-width:  576px) {}
-  @media screen and (max-width:  480px) {}
+  @media screen and (max-width:  480px) {
+
+    .parent {
+    
+      .row {}
+
+      div.col {
+        width: 100% !important;
+        margin: 1rem 0 !important;
+      }
+    }
+  }
 
 
 

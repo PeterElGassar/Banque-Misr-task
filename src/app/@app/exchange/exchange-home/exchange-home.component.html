@@ -4,12 +4,12 @@
 <section class="container">
     <h1 class="title">Currency Exchanger</h1>
 
-    <form method="post">
+    <form  [formGroup]="exchangeForm" (submit)="onSubmit()">
         <div class="row row-calc">
 
             <div class="wrapper-amount form-control">
                 <label for="amount">Amount</label>
-                <input type="number" id="amount" autocomplete="off" />
+                <input formControlName="amount" type="number"  id="amount" autocomplete="off" />
             </div>
 
             <div class="calc-form">
@@ -17,11 +17,11 @@
                 <div class="form-control">
                     <label class="form-label" for="standard-select">Form</label>
                     <div class="select">
-                        <select name="format" id="format">
-                            <option selected disabled>USD</option>
-                            <option value="pdf">USD</option>
-                            <option value="txt">EUR</option>
-                            <option value="epub">EGP</option>
+                        <select formControlName="from" name="format" id="format">
+
+                            <option *ngFor="let currency of this.currencies  | keyvalue" [value]="currency.key">
+                                <strong>{{currency.key}}</strong>: {{currency.value}}</option>
+
                         </select>
                     </div>
                 </div>
@@ -32,11 +32,10 @@
                 <div class="form-control">
                     <label class="form-label" for="standard-select">To</label>
                     <div class="select">
-                        <select name="format" id="format">
-                            <option selected disabled>EGP</option>
-                            <option value="pdf">USD</option>
-                            <option value="txt">EUR</option>
-                            <option value="epub">EGP</option>
+                        <select formControlName="to" name="format" id="format">
+                            <option 
+                            *ngFor="let currency of this.currencies | keyvalue" [value]="currency.key">
+                                <strong>{{currency.key}}</strong>: {{currency.value}}</option>
 
                         </select>
                     </div>
@@ -51,7 +50,7 @@
             </div>
 
             <div class="calc-form">
-                <button class="form-submit">
+                <button type="submit" class="form-submit">
                     Convert
                 </button>
             </div>
@@ -65,7 +64,7 @@
         <div class="row result-row">
 
             <div class="result">
-                <p>5225.63 USD</p>
+                <p>{{AmountProp?.value}} <span>{{FromProp?.value}}</span> = {{fetchAllResult.EUR}} {{ToProp?.value}}</p>
             </div>
             <div class="currency-value">
                 <p>5225.63 USD = 8336UE</p>
@@ -81,21 +80,12 @@
    
     <div class="parent">
         <div class="row">
-            <div class="col"> Peter</div>
-            <div class="col">Peter </div>
-            <div class="col"> Peter</div>
+            <div class="col" *ngFor="let currency of mostPopularCurrencies2 | keyvalue"> 
+                {{AmountProp?.value}} {{FromProp?.value}} =   {{getObjKeyName(currency.value)}} : {{getObjValue(currency.value)}}
+            </div>
+
+
         </div>
 
-        <div class="row">
-            <div class="col"> Peter</div>
-            <div class="col">Peter </div>
-            <div class="col">Peter </div>
-        </div>
-
-        <div class="row">
-            <div class="col"> Peter</div>
-            <div class="col">Peter </div>
-            <div class="col"> Peter</div>
-        </div>
         </div>
 </section>

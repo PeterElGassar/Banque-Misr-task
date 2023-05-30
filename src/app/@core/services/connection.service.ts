@@ -7,13 +7,15 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ConnectionService {
-  apiUrlPrefix = environment.baseUrl;
+  apiUrlPrefix = environment.baseUrl2;
 
   constructor(private http: HttpClient) {}
 
-  post(url: string, body: any): Observable<any> {
+  post(url: string, body: any,params?: HttpParams): Observable<any> {
     const fullUrl: string = this.apiUrlPrefix + url;
-    return this.http.post(fullUrl, body);
+    const opts = params ? { params: params } : {};
+    
+    return this.http.post(fullUrl, body,opts);
   }
 
   patch(url: string, body: any): Observable<any> {

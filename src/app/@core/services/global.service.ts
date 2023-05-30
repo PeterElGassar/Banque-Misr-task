@@ -7,79 +7,64 @@ import { HttpParams } from '@angular/common/http';
   providedIn: 'root'
 })
 export class GlobalService {
-  private connectionService!: ConnectionService;
-  constructor(
-    private injector: Injector,
-  ) {}
+  private _connectionService!: ConnectionService;
 
-  public get connectionServiceOBJ(): ConnectionService {
-    if (!this.connectionService) {
-      this.connectionService = this.injector.get(ConnectionService);
+  constructor(private injector: Injector) {}
+
+  public get connectionService(): ConnectionService {
+    if (!this._connectionService) {
+      console.log('Injectrorrr');
+      
+      this._connectionService = this.injector.get(ConnectionService);
     }
-    return this.connectionService;
+    return this._connectionService;
   }
 
-  async handleErrors(res:any) {
+  async handleErrors(res: any) {
     if (
-      res.status === 400 ||
-      res.status === 402 ||
-      res.status === 500 ||
-      res.status === 0
+      res.status == 400 ||
+      res.status == 402 ||
+      res.status == 500 ||
+      res.status == 0
     ) {
-      // this.displayToast('Server Error', res.error.message);
+      this.displayToast(
+        'try another time or check notwork connection',
+        'dismiss'
+      );
     }
   }
 
+  async displayToast(messge: any, action: any) {
+    // this._snackBar.open(messge, action);
+  }
 
+  // SECTION Connection Service
+  post(url: string, body?: any, params?: HttpParams) {
+    const request = params
+      ? this.connectionService.post(url, body, params)
+      : this.connectionService.post(url, body);
+;
+    return request.pipe(
+      map((res: any) => res),
+      catchError((res: any) => {
+        this.handleErrors(res);
+        return throwError(res);
+      })
+    );
+  }
 
-    // SECTION Connection Service
-    post(url: string, body?: any) {
-      return this.connectionServiceOBJ.post(url, body).pipe(
-        map((res: any) => res),
-        catchError((res: any) => {
-          this.handleErrors(res);
-          return throwError(res);
-        })
-      );
-    }
-    get(url: string, params?: HttpParams) {
-      const request = params
-        ? this.connectionServiceOBJ.get(url, params)
-        : this.connectionServiceOBJ.get(url);
-      return request.pipe(
-        map((res: any) => res),
-        catchError((res: any) => {
-          this.handleErrors(res);
-          return throwError(res);
-        })
-      );
-    }
-    put(url: string, body?: any) {
-      return this.connectionServiceOBJ.put(url, body).pipe(
-        map((res: any) => res),
-        catchError((res: any) => {
-          this.handleErrors(res);
-          return throwError(res);
-        })
-      );
-    }
-    
-    patch(url: string, body?: any) {
-      return this.connectionServiceOBJ.patch(url, body).pipe(
-        map((res: any) => res),
-        catchError((res: any) => {
-          this.handleErrors(res);
-          return throwError(res);
-        })
-      );
-    }
-    delete(url: string) {
-      return this.connectionServiceOBJ.delete(url).pipe(
-        map((res: any) => res),
-        catchError((res: any) => {
-          this.handleErrors(res);
-          return throwError(res);
-        })
-      );
-    }
+  get(url: string, params?: HttpParams) {
+    const request = params
+      ? this.connectionService.get(url, params)
+      : this.connectionService.get(url);
+;
+    return request.pipe(
+      map((res: any) => res),
+      catchError((res: any) => {
+        this.handleErrors(res);
+        return throwError(res);
+      })
+    );
+  }
+
 }

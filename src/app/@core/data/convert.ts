@@ -16,3 +16,13 @@ export class Info {
   timestamp: number = 0;
   rate: number = 0;
 }
+
+export class ConvertResponse {
+  
+    base: string;
+    amount: number;
+    result: any;
+
+}
+
+

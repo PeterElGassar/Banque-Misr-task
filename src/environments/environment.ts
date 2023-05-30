@@ -5,7 +5,9 @@
 export const environment = {
   production: false,
   baseUrl: 'http://data.fixer.io/api/',
-  fixer_key: 'ef0225e484b5db5ad548431680772b6c',
+  baseUrl2: 'https://api.fastforex.io/',
+  fixer_key_Old: 'ef0225e484b5db5ad548431680772b6c',
+  fixer_key: '51b24e428843e7e09476e9439483163e',
   fastforex_key: '22b397f15a-87d05ba5ac-rve66o'
 };
 /*
