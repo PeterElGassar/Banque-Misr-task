@@ -1,4 +1,7 @@
-<app-header>
+<app-header 
+[fromCurrency]="oneCurrency.from" 
+[toCurrency]="oneCurrency.to">
+
 </app-header>
 
 <section class="container">
@@ -9,7 +12,7 @@
 
             <div class="wrapper-amount form-control">
                 <label for="amount">Amount</label>
-                <input formControlName="amount" type="number"  id="amount" autocomplete="off" />
+                <input min=1 formControlName="amount" type="number"  id="amount" autocomplete="off" />
             </div>
 
             <div class="calc-form">
@@ -50,7 +53,7 @@
             </div>
 
             <div class="calc-form">
-                <button type="submit" class="form-submit">
+                <button [disabled]="exchangeForm.invalid" [class.disabled-btn]="exchangeForm.invalid" type="submit" class="form-submit">
                     Convert
                 </button>
             </div>
@@ -64,10 +67,14 @@
         <div class="row result-row">
 
             <div class="result">
-                <p>{{AmountProp?.value}} <span>{{FromProp?.value}}</span> = {{fetchAllResult.EUR}} {{ToProp?.value}}</p>
+
+                <p><span>1.00 </span>{{oneCurrency.to}} = {{oneCurrency.rate}} {{oneCurrency.from}}</p>
             </div>
+
             <div class="currency-value">
-                <p>5225.63 USD = 8336UE</p>
+                <!-- here -->
+
+                <h1>{{convertedCurrencyValue?.convertedValue}} {{convertedCurrencyValue?.convertedCurrency}} </h1> 
             </div>
 
             <button class="form-submit">
@@ -81,7 +88,7 @@
     <div class="parent">
         <div class="row">
             <div class="col" *ngFor="let currency of mostPopularCurrencies2 | keyvalue"> 
-                {{AmountProp?.value}} {{FromProp?.value}} =   {{getObjKeyName(currency.value)}} : {{getObjValue(currency.value)}}
+                1.00 {{oneCurrency.from}} =   {{getObjKeyName(currency.value)}} : {{getObjValue(currency.value)}}
             </div>
 
 

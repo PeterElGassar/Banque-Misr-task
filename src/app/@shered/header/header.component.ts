@@ -1,15 +1,17 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit,OnChanges{
   @ViewChild('sidebar') sidebar: ElementRef = new ElementRef<any>(null);
   @ViewChild('menuButton') menuButton: ElementRef = new ElementRef<any>(null);
   @ViewChild('closeButton') closeButton: ElementRef = new ElementRef<any>(null);
 
+  @Input() fromCurrency: string='EUR';
+  @Input() toCurrency: string="USD";
 
   constructor() {
     
@@ -19,6 +21,16 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
 
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // Handle changes to the 'data' input property
+    if (changes) {
+      console.log('Data has changed:', changes);
+      // Perform any additional actions or logic based on the change
+    }
+  }
+
+
 
   openMenu() {
     this.sidebar.nativeElement.style.display = "flex";

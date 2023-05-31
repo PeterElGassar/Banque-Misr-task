@@ -51,8 +51,13 @@
   --primary-90: hsl(var(--primary-hue), 100%, var(--s-90));
   --primary-100: hsl(var(--primary-hue), 100%, var(--s-100));
 }
+@font-face {
+  font-family: 'IBMPlexSans' ;
+  src: url('/assets/fonts/IBMPlexSans-SemiBold.ttf') format('woff2')
+}
 
 *{
+  font-family: 'IBMPlexSans' !important;
   box-sizing: border-box;
 }
 body{
