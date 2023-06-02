@@ -14,7 +14,7 @@ const routes: Routes = [
     component: ExchangeHomeComponent,
   },
   {
-    path: 'exchange-details',
+    path: 'exchange-details/:fromCurrency/:toCurrency/:amount',
     component: ExchangeDetailsComponent,
   },
   { path: '', redirectTo: 'exchange-home', pathMatch: 'full' },

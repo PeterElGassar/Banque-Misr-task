@@ -30,8 +30,8 @@ export class ExchangeHomeComponent implements OnInit {
 
   // fetchOne
   oneCurrency: any = {
-    from: 'USD',
-    to: 'EGP',
+    from: 'EUR',
+    to: 'USD',
     rate: 0,
   };
 
@@ -71,7 +71,7 @@ export class ExchangeHomeComponent implements OnInit {
     });
   }
 
-  fetchAll(from:any=null) {
+  fetchAll(from: any = null) {
     this.CurrencyExchangeServ.fetchAll(this.ToProp?.value).subscribe((res) => {
       this.fetchAllResult = res.results;
 
@@ -79,45 +79,46 @@ export class ExchangeHomeComponent implements OnInit {
     });
   }
 
-
   // 1
-    fetchOne() {
-      this.CurrencyExchangeServ.fetchOne(this.exchangeForm?.value)
-        .pipe(
-          map((res) => {
-            return new Object({
-              from: this.ToProp?.value,
-              to: this.FromProp?.value,
-              rate: res.result[this.ToProp?.value],
-            });
-          })
-        )
-        .subscribe((res) => (this.oneCurrency = res));
-    }
+  fetchOne() {
+    this.CurrencyExchangeServ.fetchOne(this.exchangeForm?.value)
+      .pipe(
+        map((res) => {
+          return new Object({
+            from: this.FromProp?.value,
+            to: this.ToProp?.value,
+            rate: res.result[this.ToProp?.value],
+          });
+        })
+      )
+      .subscribe((res) => (this.oneCurrency = res));
+  }
 
   // 2
-    convertCurrency(val:any=null) {
-      let transformValues = this.exchangeForm.value;
-      
-      this.CurrencyExchangeServ.convert(val?val:transformValues)
-        .pipe(
-          map((res) => {
-            return new Object({
-              convertedCurrency: this.ToProp?.value,
-              convertedValue: res.result[this.ToProp?.value],
-            });
-          })
-        )
-        .subscribe((res) => {
+  convertCurrency(val: any = null) {
+    let transformValues = this.exchangeForm.value;
+
+    this.CurrencyExchangeServ.convert(val ? val : transformValues)
+      .pipe(
+        map((res) => {
+          return new Object({
+            convertedCurrency: this.ToProp?.value,
+            convertedValue: res.result[this.ToProp?.value],
+          });
+        })
+      )
+      .subscribe(
+        (res) => {
           this.convertedCurrencyValue = res;
           this.fetchOne();
           this.fetchAll(this.FromProp?.value);
-          console.log('new data',this.mostPopularCurrencies2);
-          
-          // this.mostPopularCurrencies2 = this.getMostPopularCurrencies();
+          console.log('new data', this.mostPopularCurrencies2);
 
-        },err=> console.log(err) );
-    }
+          // this.mostPopularCurrencies2 = this.getMostPopularCurrencies();
+        },
+        (err) => console.log(err)
+      );
+  }
 
   private getMostPopularCurrencies() {
     const result: string[] = [];
@@ -134,14 +135,14 @@ export class ExchangeHomeComponent implements OnInit {
 
   initialExchangeForm() {
     this.exchangeForm = this.fb.group({
-      from: ['USD', [Validators.required]],
-      to: ['EGP', [Validators.required]],
+      from: ['EUR', [Validators.required]],
+      to: ['USD', [Validators.required]],
       amount: [1, [Validators.required]],
     });
   }
 
   onSubmit() {
-   this.convertCurrency(this.exchangeForm.value);
+    this.convertCurrency(this.exchangeForm.value);
   }
 
   getObjKeyName(obj: any) {
@@ -151,5 +152,19 @@ export class ExchangeHomeComponent implements OnInit {
   getObjValue(obj: any) {
     var keys = Object.values(obj);
     return keys[0];
+  }
+
+  swapValues() {
+
+    let temp;
+
+    //swap variables
+    temp = this.FromProp?.value;
+
+    this.FromProp?.setValue(this.ToProp?.value);
+    this.ToProp?.setValue(temp);
+
+    console.log(`The value of a after swapping: ${this.ToProp?.value}`);
+    console.log(`The value of b after swapping: ${this.FromProp?.value}`);
   }
 }

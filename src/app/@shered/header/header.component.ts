@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit,OnChanges{
 
   @Input() fromCurrency: string='EUR';
   @Input() toCurrency: string="USD";
+  @Input() amount: number=1;
 
   constructor() {
     

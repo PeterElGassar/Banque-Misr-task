@@ -1,1 +1,102 @@
-<p>exchange-details works!</p>
+<app-header 
+[fromCurrency]="oneCurrency.from" 
+[toCurrency]="oneCurrency.to">
+
+</app-header>
+
+<section class="container">
+<div class=" d-flex">
+    <h1 *ngIf="fromCurrencyName" class="title">{{fromCurrencyParam}} - {{fromCurrencyName}}</h1>
+    <a [routerLink]="['/home']" class="back-btn form-submit">
+        Back to Home
+    </a>
+</div>
+
+    <form  [formGroup]="exchangeForm" (submit)="onSubmit()">
+        <div class="row row-calc">
+
+            <div class="wrapper-amount form-control">
+                <label for="amount">Amount</label>
+                <input min=1 formControlName="amount" type="number"  id="amount" autocomplete="off" />
+            </div>
+
+            <div class="calc-form">
+
+                <div class="form-control">
+                    <label class="form-label" for="standard-select">Form</label>
+                    <div class="select">
+                        <select   [attr.disabled]="true" formControlName="from" name="format" id="format">
+
+                            <option  *ngFor="let currency of this.currencies  | keyvalue" [value]="currency.key">
+                                <strong>{{currency.key}}</strong>: {{currency.value}}</option>
+
+                        </select>
+                    </div>
+                </div>
+
+            <button (click)="swapValues()" class="btn-revers btn-primary">
+                <i class="bi bi-repeat"></i>
+            </button>
+                <div class="form-control">
+                    <label class="form-label" for="standard-select">To</label>
+                    <div class="select">
+                        <select formControlName="to" name="format" id="format">
+                            <option 
+                            *ngFor="let currency of this.currencies | keyvalue" [value]="currency.key">
+                                <strong>{{currency.key}}</strong>: {{currency.value}}</option>
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="row row-calc">
+
+            <div class="wrapper-amount form-control">
+                
+            </div>
+
+            <div class="calc-form">
+                <button [disabled]="exchangeForm.invalid" [class.disabled-btn]="exchangeForm.invalid" type="submit" class="form-submit">
+                    Convert
+                </button>
+            </div>
+
+        </div>
+
+        <div class="row row-calc">
+
+            <div class="wrapper-amount form-control">
+                <div class="result">
+
+                    <p><span>1.00 </span>{{oneCurrency.to}} = {{oneCurrency.rate}} {{oneCurrency.from}}</p>
+                </div>
+            </div>
+
+                <div class="currency-value calc-form amount-result">
+                    <!-- here -->
+    
+                    <h1>{{convertedCurrencyValue?.convertedValue}} {{convertedCurrencyValue?.convertedCurrency}} </h1> 
+                </div>
+
+        </div>
+
+        
+
+
+
+        <div class="row result-row">
+
+
+
+
+
+        </div>
+    </form>
+</section>
+<section class="container">
+   
+    <h1>peter</h1>
+</section>

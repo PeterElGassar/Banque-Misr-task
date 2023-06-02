@@ -37,7 +37,7 @@ export class CurrencyExchangeService {
   fetchAll(from?:any): Observable<any> {
     let params = new HttpParams();
     params = params.appendAll({ api_key: this.access_key,...{from} });
-    debugger
+    
     return this._globalService.get(`fetch-all`,params);
   }
   

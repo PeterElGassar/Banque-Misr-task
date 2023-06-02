@@ -9,8 +9,8 @@
     </a>
   
     <nav>
-      <a class="header-link" target="_blank" href="#">{{fromCurrency}}-{{toCurrency}} Details</a>
-      <a class="header-link" target="_blank" href="#">{{fromCurrency}}-GBP Details </a>
+      <a class="header-link" [routerLink]="['/home/exchange-details', fromCurrency,toCurrency,amount]">{{fromCurrency}}-{{toCurrency}} Details</a>
+      <a class="header-link" routerLink="/exchange-details/{{fromCurrency}}">{{fromCurrency}}-GBP Details </a>
     </nav>
   
     <button class="menu-button" id="menu-button" #menuButton (click)="openMenu()">

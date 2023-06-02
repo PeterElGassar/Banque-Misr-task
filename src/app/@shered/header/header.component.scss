@@ -70,9 +70,9 @@ nav .header-link {
 nav .header-link:hover {
   transition: 0.3s ease;
   cursor: pointer;
-  border: 2px solid var(--primary);
+  border: 2px solid var(--text-primary);
 
-  background: var(--primary);
+  background: var(--text-primary);
   color: #FFF;
 }
 
