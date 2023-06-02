@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
+import { ConvertedCurrencyValue } from 'src/app/@core/data/modal/converted-currency-value';
+import { Currency } from 'src/app/@core/data/modal/currency';
 import { CurrencyExchangeService } from 'src/app/@core/services/currency-exchange.service';
 
 @Component({
@@ -11,29 +13,14 @@ import { CurrencyExchangeService } from 'src/app/@core/services/currency-exchang
 })
 export class ExchangeDetailsComponent implements OnInit {
   exchangeForm: FormGroup;
-
-  currentSelectedCurrencyRate: any = null;
-  // convertCurrency: any = null;
   currencies: any[] = [];
-  fetchAllResult: any = [];
+  oneCurrency: Currency = new Currency();
+  convertedCurrencyValue: ConvertedCurrencyValue = new ConvertedCurrencyValue();
 
-  // fetchOne
-  oneCurrency: any = {
-    from: 'USD',
-    to: 'EGP',
-    rate: 0,
-  };
-
-  // fetchOne
-  convertedCurrencyValue: any = {
-    convertedCurrency: '',
-    convertedValue: 0,
-  };
-
+  // properties
   get FromProp() {
     return this.exchangeForm.get('from');
   }
-
   get ToProp() {
     return this.exchangeForm.get('to');
   }
@@ -55,7 +42,6 @@ export class ExchangeDetailsComponent implements OnInit {
       this.fromCurrencyParam = params['fromCurrency'];
       this.toCurrencyParam = params['toCurrency'];
       this.amount = params['amount'];
-      // Use the ID parameter value as needed
     });
   }
 
@@ -100,7 +86,7 @@ export class ExchangeDetailsComponent implements OnInit {
           });
         })
       ).subscribe(
-        (res) => {
+        (res:any) => {
           this.convertedCurrencyValue = res;
           this.fetchOne();
         },
@@ -126,5 +112,5 @@ export class ExchangeDetailsComponent implements OnInit {
     this.ToProp?.setValue(temp);
   }
 
-  
+
 }
