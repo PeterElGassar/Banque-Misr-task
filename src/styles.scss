@@ -35,6 +35,7 @@
   /* Text colors */
   --text: var(--white-20);
   --text-secondary: var(--white-60);
+  --text-dark: #18212E;
   --text-primary: #336D9D;
   --text-button: var(--white-100);
 
@@ -78,10 +79,11 @@ h5,
 h6,
 label,
 button,
-a {
+a,label {
   // font-family: "Open Sans" !important;
   font-style: normal !important;
   text-decoration: none;
+  color: var( --text-dark);
 }
 
 body {
@@ -117,11 +119,9 @@ body {
 .container{
   padding: 1rem;
   margin: 1.5rem;
-  background-color: antiquewhite;
+  background: #BFA9FF;
+  border-radius: 12px;
 
-  .title{
-
-  }
 }
 
 
@@ -131,7 +131,7 @@ body {
 
 
 form {
-margin:7% auto 0 auto;
+  margin: 25px auto 0 auto;
 padding:30px;
 width:100%;
 height:auto;
@@ -225,10 +225,8 @@ select {
   background-image: none;
   flex: 1;
   padding: 0 .5em;
-  color:#fff;
   cursor:pointer;
   font-size: 1em;
-  font-family: 'Open Sans', sans-serif;
 border: 1.5px solid #e4e4e4;
 color: #444;
 }
@@ -296,7 +294,7 @@ select::-ms-expand {
   }
   .btn-primary{
       flex: 1;
-      margin: 5px;
+      // margin: 5px;
   }
 }
 
@@ -317,7 +315,7 @@ select::-ms-expand {
 
 
 
-.parent {
+.card-wrapper {
   display: flex;
   flex-direction: column;
   .row{
@@ -328,10 +326,17 @@ select::-ms-expand {
   div.col {
       height: 200px;
       width: 350px;
-      background: #336D9D;
       margin: 1rem;
       border-radius: 12px;
       padding: 1rem;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: #F6F6F6;
+      border: 1px solid #336D9D;
+      border-radius: 18px;
   }
 }
 
@@ -365,7 +370,11 @@ select::-ms-expand {
 
 @media screen and (max-width: 1200px) {}
 
-@media screen and (max-width: 1024px) {}
+@media screen and (max-width: 1024px) {
+  .row {
+    flex-direction: column;
+  }
+}
 
 @media screen and (max-width: 992px) {
 
@@ -374,23 +383,9 @@ select::-ms-expand {
     flex: none !important;
     width: 100%;
   }
-
-
-
-  .row {
-    flex-direction: column;
-  }
-}
-
-
-@media screen and (max-width: 768px) {
-  #exchange-form {
-    padding: 15px;
-  }
-
   .calc-form {
     flex-direction: column;
-
+padding: 0;
     .form-control {
       flex: none;
       width: 100%;
@@ -403,9 +398,7 @@ select::-ms-expand {
 
 
 
-    .parent {
-
-      .row {}
+    .card-wrapper {
 
       div.col {
         width: 50% !important;
@@ -413,13 +406,25 @@ select::-ms-expand {
       }
     }
   }
+
+
+
+}
+
+
+@media screen and (max-width: 768px) {
+  #exchange-form {
+    padding: 15px;
+  }
+
+
 }
 
 @media screen and (max-width: 576px) {}
 
 @media screen and (max-width: 480px) {
 
-  .parent {
+  .card-wrapper {
 
     .row {}
 

@@ -14,7 +14,7 @@
 
             <div class="wrapper-amount form-control">
                 <label for="amount">Amount</label>
-                <input min=1 formControlName="amount" type="number"  id="amount" autocomplete="off" />
+                <input step="any" min=1 formControlName="amount" type="number"  id="amount" autocomplete="off" />
             </div>
 
             <div class="calc-form">
@@ -24,7 +24,7 @@
                     <div class="select">
                         <select formControlName="from" name="format" id="format">
 
-                            <option *ngFor="let currency of this.currencies  | keyvalue" [value]="currency.key">
+                            <option *ngFor="let currency of  this.allCurrencies?.currencies | keyvalue" [value]="currency.key">
                                 <strong>{{currency.key}}</strong>: {{currency.value}}</option>
 
                         </select>
@@ -39,7 +39,7 @@
                     <div class="select">
                         <select formControlName="to" name="format" id="format">
                             <option 
-                            *ngFor="let currency of this.currencies | keyvalue" [value]="currency.key">
+                            *ngFor="let currency of this.allCurrencies?.currencies | keyvalue" [value]="currency.key">
                                 <strong>{{currency.key}}</strong>: {{currency.value}}</option>
 
                         </select>
@@ -76,10 +76,12 @@
             <div class="currency-value">
                 <!-- here -->
 
-                <h1>{{convertedCurrencyValue?.convertedValue}} {{convertedCurrencyValue?.convertedCurrency}} </h1> 
+                <h1>{{convertedCurrencyValue.convertedValue}} {{convertedCurrencyValue.convertedCurrency}} </h1> 
             </div>
-
-            <a [routerLink]="['/home/exchange-details', oneCurrency.from]"  class="form-submit">
+            
+            <a 
+            [routerLink]="['/home/exchange-details', oneCurrency.from,oneCurrency.to,AmountProp?.value]"
+              class="form-submit">
                 Details
             </a>
         </div>
@@ -87,13 +89,11 @@
 </section>
 <section class="container">
    
-    <div class="parent">
+    <div class="card-wrapper">
         <div class="row">
-            <div class="col" *ngFor="let currency of mostPopularCurrencies2 | keyvalue"> 
-                1.00 {{oneCurrency.to}} =   {{getObjKeyName(currency.value)}} : {{getObjValue(currency.value)}}
+            <div class="col" *ngFor="let currency of mostPopularCurrenciesList | keyvalue"> 
+                1.00 {{oneCurrency.from}} =   {{getObjKeyName(currency.value)}} : {{getObjValue(currency.value)}}
             </div>
-
-
         </div>
 
         </div>

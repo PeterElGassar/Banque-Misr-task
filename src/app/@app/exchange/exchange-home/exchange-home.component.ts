@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs';
+import { MostPopularCurrenciesEnum } from 'src/app/@core/data/enums/mostPopularCurrencies';
+import { ConvertedCurrencyValue } from 'src/app/@core/data/modal/converted-currency-value';
+import { Currencies, Currency } from 'src/app/@core/data/modal/currency';
 import { CurrencyExchangeService } from 'src/app/@core/services/currency-exchange.service';
 
 @Component({
@@ -10,44 +13,24 @@ import { CurrencyExchangeService } from 'src/app/@core/services/currency-exchang
 })
 export class ExchangeHomeComponent implements OnInit {
   exchangeForm: FormGroup;
-
-  currentSelectedCurrencyRate: any = null;
-  // convertCurrency: any = null;
-  currencies: any[] = [];
+  mostPopularCurrenciesEnum = MostPopularCurrenciesEnum;
+  // fetchOne
+  convertedCurrencyValue: ConvertedCurrencyValue = new ConvertedCurrencyValue();
+  allCurrencies: Currencies = new Currencies();
   fetchAllResult: any = [];
-  mostPopularCurrencies: any = [
-    'JPY',
-    'GBP',
-    'AUD',
-    'CAD',
-    'CHF',
-    'CNH',
-    'HKD',
-    'NZD',
-    'AED',
-  ];
-  mostPopularCurrencies2: any = [];
+  mostPopularCurrenciesList: any = [];
 
   // fetchOne
-  oneCurrency: any = {
-    from: 'EUR',
-    to: 'USD',
-    rate: 0,
-  };
+  oneCurrency: Currency =new Currency();
 
-  // fetchOne
-  convertedCurrencyValue: any = {
-    convertedCurrency: '',
-    convertedValue: 0,
-  };
 
+  // peoperties
   get FromProp() {
     return this.exchangeForm.get('from');
   }
-
   get ToProp() {
     return this.exchangeForm.get('to');
-  }
+  } 
   get AmountProp() {
     return this.exchangeForm.get('amount');
   }
@@ -63,38 +46,34 @@ export class ExchangeHomeComponent implements OnInit {
     this.fetchAll();
     this.fetchOne();
     this.convertCurrency();
+
   }
 
   getLatestCurrencies() {
     this.CurrencyExchangeServ.getAllCurrencies().subscribe((res) => {
-      this.currencies = res.currencies;
+      this.allCurrencies.currencies = res.currencies;
     });
   }
 
-  fetchAll(from: any = null) {
+  fetchAll() {
     this.CurrencyExchangeServ.fetchAll(this.ToProp?.value).subscribe((res) => {
       this.fetchAllResult = res.results;
-
-      this.mostPopularCurrencies2 = this.getMostPopularCurrencies();
+      this.mostPopularCurrenciesList = this.getMostPopularCurrencies();
     });
   }
 
-  // 1
   fetchOne() {
     this.CurrencyExchangeServ.fetchOne(this.exchangeForm?.value)
       .pipe(
         map((res) => {
-          return new Object({
-            from: this.FromProp?.value,
+          return {from: this.FromProp?.value,
             to: this.ToProp?.value,
-            rate: res.result[this.ToProp?.value],
-          });
+            rate: res.result[this.ToProp?.value]}
         })
       )
       .subscribe((res) => (this.oneCurrency = res));
   }
 
-  // 2
   convertCurrency(val: any = null) {
     let transformValues = this.exchangeForm.value;
 
@@ -108,36 +87,20 @@ export class ExchangeHomeComponent implements OnInit {
         })
       )
       .subscribe(
-        (res) => {
+        (res:any) => {
           this.convertedCurrencyValue = res;
           this.fetchOne();
-          this.fetchAll(this.FromProp?.value);
-          console.log('new data', this.mostPopularCurrencies2);
-
-          // this.mostPopularCurrencies2 = this.getMostPopularCurrencies();
+          this.fetchAll();
         },
         (err) => console.log(err)
       );
-  }
-
-  private getMostPopularCurrencies() {
-    const result: string[] = [];
-
-    for (let key in this.fetchAllResult) {
-      let obj: any = {};
-      if (this.mostPopularCurrencies.includes(key)) {
-        obj[key] = this.fetchAllResult[key];
-        result.push(obj);
-      }
-    }
-    return result;
   }
 
   initialExchangeForm() {
     this.exchangeForm = this.fb.group({
       from: ['EUR', [Validators.required]],
       to: ['USD', [Validators.required]],
-      amount: [1, [Validators.required]],
+      amount: [1.00, [Validators.required]],
     });
   }
 
@@ -145,6 +108,13 @@ export class ExchangeHomeComponent implements OnInit {
     this.convertCurrency(this.exchangeForm.value);
   }
 
+  swapValues() {
+     const temp = this.FromProp?.value;
+    this.FromProp?.setValue(this.ToProp?.value);
+    this.ToProp?.setValue(temp);
+  }
+
+  // using this because api return values as an object not normal array
   getObjKeyName(obj: any) {
     var keys = Object.keys(obj);
     return keys[0];
@@ -154,17 +124,19 @@ export class ExchangeHomeComponent implements OnInit {
     return keys[0];
   }
 
-  swapValues() {
+  //just filter the mostPopularCurrencies came from api
+  //dependent of my enum
+  private getMostPopularCurrencies() {
+    const result: string[] = [];
 
-    let temp;
+    for (let key in this.fetchAllResult) {
+      let popularCurrencyObj: any = {};
 
-    //swap variables
-    temp = this.FromProp?.value;
-
-    this.FromProp?.setValue(this.ToProp?.value);
-    this.ToProp?.setValue(temp);
-
-    console.log(`The value of a after swapping: ${this.ToProp?.value}`);
-    console.log(`The value of b after swapping: ${this.FromProp?.value}`);
+      if (key in this.mostPopularCurrenciesEnum) {
+        popularCurrencyObj[key] = this.fetchAllResult[key];
+        result.push(popularCurrencyObj);
+      }
+    }
+    return result;
   }
 }

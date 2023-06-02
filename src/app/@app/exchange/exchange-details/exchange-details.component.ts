@@ -17,7 +17,6 @@ export class ExchangeDetailsComponent implements OnInit {
   currencies: any[] = [];
   fetchAllResult: any = [];
 
-
   // fetchOne
   oneCurrency: any = {
     from: 'USD',
@@ -41,7 +40,7 @@ export class ExchangeDetailsComponent implements OnInit {
   get AmountProp() {
     return this.exchangeForm.get('amount');
   }
-  
+
   fromCurrencyParam: string;
   toCurrencyParam: string;
   fromCurrencyName: string;
@@ -62,56 +61,48 @@ export class ExchangeDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.initialExchangeForm();
-    this.getLatestCurrencies();
+    this.getAllCurrencies();
     this.fetchOne();
     this.convertCurrency();
   }
 
-  getLatestCurrencies() {
+  getAllCurrencies() {
     this.CurrencyExchangeServ.getAllCurrencies().subscribe((res) => {
       this.currencies = res.currencies;
 
       for (let key in this.currencies) {
-        if (this.fromCurrencyParam == key) this.fromCurrencyName= this.currencies[key];
+        if (this.fromCurrencyParam == key)
+          this.fromCurrencyName = this.currencies[key];
       }
     });
   }
 
-
-
-  // 1
   fetchOne() {
-    this.CurrencyExchangeServ.fetchOne(this.exchangeForm?.value)
-      .pipe(
+    this.CurrencyExchangeServ.fetchOne(this.exchangeForm?.value).pipe(
         map((res) => {
-          return new Object({
+          return {
             from: this.ToProp?.value,
             to: this.FromProp?.value,
             rate: res.result[this.ToProp?.value],
-          });
+          };
         })
       )
       .subscribe((res) => (this.oneCurrency = res));
   }
 
-  // 2
   convertCurrency(val: any = null) {
-    let transformValues = this.exchangeForm.value;
-
-    this.CurrencyExchangeServ.convert(val ? val : transformValues)
-      .pipe(
+    let transformValues = val ? val : this.exchangeForm.value;
+    this.CurrencyExchangeServ.convert(transformValues).pipe(
         map((res) => {
           return new Object({
             convertedCurrency: this.ToProp?.value,
             convertedValue: res.result[this.ToProp?.value],
           });
         })
-      )
-      .subscribe(
+      ).subscribe(
         (res) => {
           this.convertedCurrencyValue = res;
           this.fetchOne();
-         
         },
         (err) => console.log(err)
       );
@@ -129,19 +120,11 @@ export class ExchangeDetailsComponent implements OnInit {
     this.convertCurrency(this.exchangeForm.value);
   }
 
-
-  
   swapValues() {
-
-    let temp;
-
-    //swap variables
-    temp = this.FromProp?.value;
-
+    const temp = this.FromProp?.value;
     this.FromProp?.setValue(this.ToProp?.value);
     this.ToProp?.setValue(temp);
-
-    console.log(`The value of a after swapping: ${this.ToProp?.value}`);
-    console.log(`The value of b after swapping: ${this.FromProp?.value}`);
   }
+
+  
 }

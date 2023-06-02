@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ConnectionService {
-  apiUrlPrefix = environment.baseUrl2;
+  apiUrlPrefix = environment.baseUrl;
 
   constructor(private http: HttpClient) {}
 

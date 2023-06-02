@@ -12,9 +12,7 @@ export class GlobalService {
   constructor(private injector: Injector) {}
 
   public get connectionService(): ConnectionService {
-    if (!this._connectionService) {
-      console.log('Injectrorrr');
-      
+    if (!this._connectionService) {      
       this._connectionService = this.injector.get(ConnectionService);
     }
     return this._connectionService;
@@ -43,7 +41,6 @@ export class GlobalService {
     const request = params
       ? this.connectionService.post(url, body, params)
       : this.connectionService.post(url, body);
-;
     return request.pipe(
       map((res: any) => res),
       catchError((res: any) => {
@@ -57,7 +54,6 @@ export class GlobalService {
     const request = params
       ? this.connectionService.get(url, params)
       : this.connectionService.get(url);
-;
     return request.pipe(
       map((res: any) => res),
       catchError((res: any) => {

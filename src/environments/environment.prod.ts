@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  baseUrl: 'http://data.fixer.io/api/',
-  access_key: 'ef0225e484b5db5ad548431680772b6c'
+  baseUrl: 'https://api.fastforex.io/',
+  fastforex_key: '22b397f15a-87d05ba5ac-rve66o'
 };

@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
 
- 
   {
     path: 'home',
     loadChildren: () => import('./@app/exchange/exchange.module').then((m) => m.ExchangeModule),
